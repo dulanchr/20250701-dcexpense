@@ -4,34 +4,405 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Any Updates?</title>
-<link rel="stylesheet" href="styles.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Quicksand:wght@300..700&display=swap');
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1a1a1a;
+      font-family: 'Outfit', sans-serif;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Container */
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Card */
+    .card {
+      background-color: #0d0d0d;
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+
+    /* Login Screen Styles */
+    .login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .login-screen h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .pin-input-container {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .pin-digit {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #fff;
+      border-radius: 0.5rem;
+      background-color: transparent;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .pin-digit:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+    }
+
+    .pin-digit.error {
+      border-color: #ef4444;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .login-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0.3;
+    }
+
+    .login-btn:not(:disabled):hover {
+      opacity: 0.9;
+    }
+
+    .login-btn.enabled {
+      opacity: 1;
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 0.9rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .error-message.show {
+      opacity: 1;
+    }
+
+    /* Main form styles (hidden initially) */
+    .main-form {
+      display: none;
+    }
+
+    .main-form.show {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Header */
+    .card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Labels */
+    .card label {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 0.5rem;
+    }
+
+    /* Inputs */
+    .card input[type="text"], .card textarea {
+      font-family: 'Outfit', sans-serif;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: transparent;
+      border: 1px solid #fff;
+      border-radius: 0.5rem;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .card textarea {
+      font-family: 'Outfit', sans-serif;
+      resize: none;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.2;
+    }
+
+    /* Button groups */
+    .btn-group {
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-group button, .account-group button {
+      font-family: 'Outfit', sans-serif;
+      flex: 1;
+      padding: 0.5rem 1rem;
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    /* Account buttons */
+    .account-group {
+      font-family: 'Outfit', sans-serif;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .submit-btn:not(:disabled):hover {
+      opacity: 0.9;
+    }
+
+    /* Unique colors for sign buttons */
+    .btn-group button[data-sign="plus"].selected {
+      background-color: #10b981;
+      color: #000;
+      border-color: #10b981;
+    }
+
+    .btn-group button[data-sign="minus"].selected {
+      background-color: #ef4444;
+      color: #fff;
+      border-color: #ef4444;
+    }
+
+    /* Unique colors for account buttons */
+    .account-group button[data-account="COM"].selected {
+      background-color: #8b5cf6;
+      color: #fff;
+      border-color: #8b5cf6;
+    }
+
+    .account-group button[data-account="PPLS"].selected {
+      background-color: #f59e0b;
+      color: #000;
+      border-color: #f59e0b;
+    }
+
+    .account-group button[data-account="HAND"].selected {
+      background-color: #06b6d4;
+      color: #000;
+      border-color: #06b6d4;
+    }
+
+    /* Hover effects */
+    .btn-group button:hover, .account-group button:hover {
+      opacity: 0.8;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: #0d0d0d;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .modal h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .confirm-btn {
+      background-color: #10b981;
+      color: #000;
+    }
+
+    .cancel-btn {
+      background-color: #ef4444;
+      color: #fff;
+    }
+
+    .modal-btn:hover {
+      opacity: 0.8;
+    }
+
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: bold;
+      z-index: 1001;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background-color: #10b981;
+      color: #000;
+    }
+
+    .notification.error {
+      background-color: #ef4444;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <form class="card" id="updateForm">
-      <h2>Any Updates?</h2>
-      
-      <label for="amount">Amount</label>
-      <input type="text" id="amount" placeholder="00000.00" />
-      
-      <div class="btn-group" id="sign-buttons">
-        <button type="button" data-sign="plus">+</button>
-        <button type="button" data-sign="minus">-</button>
+    <div class="card">
+      <!-- Login Screen -->
+      <div class="login-screen" id="loginScreen">
+        <h2>Enter PIN</h2>
+        <div class="pin-input-container">
+          <input type="password" class="pin-digit" maxlength="1" id="pin1">
+          <input type="password" class="pin-digit" maxlength="1" id="pin2">
+          <input type="password" class="pin-digit" maxlength="1" id="pin3">
+          <input type="password" class="pin-digit" maxlength="1" id="pin4">
+        </div>
+        <div class="error-message" id="errorMessage">Incorrect PIN. Please try again.</div>
+        <button type="button" class="login-btn" id="loginBtn" disabled>Login</button>
       </div>
-      
-      <label>Account</label>
-      <div class="account-group" id="account-buttons">
-        <button type="button" data-account="COM">COM</button>
-        <button type="button" data-account="PPLS">PPLS</button>
-        <button type="button" data-account="HAND">HAND</button>
-      </div>
-      
-      <label for="reason">Why though?</label>
-      <textarea id="reason" placeholder=""></textarea>
-      
-      <button type="submit" class="submit-btn" id="submitBtn" disabled>Update</button>
-    </form>
+
+      <!-- Main Form (hidden initially) -->
+      <form class="main-form" id="updateForm">
+        <h2>Any Updates?</h2>
+        
+        <label for="amount">Amount</label>
+        <input type="text" id="amount" placeholder="00000.00" />
+        
+        <div class="btn-group" id="sign-buttons">
+          <button type="button" data-sign="plus">+</button>
+          <button type="button" data-sign="minus">-</button>
+        </div>
+        
+        <label>Account</label>
+        <div class="account-group" id="account-buttons">
+          <button type="button" data-account="COM">COM</button>
+          <button type="button" data-account="PPLS">PPLS</button>
+          <button type="button" data-account="HAND">HAND</button>
+        </div>
+        
+        <label for="reason">Why though?</label>
+        <textarea id="reason" placeholder=""></textarea>
+        
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>Update</button>
+      </form>
+    </div>
   </div>
 
   <!-- Confirmation Modal -->
@@ -47,8 +418,240 @@
 
   <!-- Notification -->
   <div class="notification" id="notification"></div>
-  <script src="script.js"></script>
 
+  <script>
+    // PIN Configuration
+    const CORRECT_PIN = '1234'; // Change this to your desired PIN
+    let isLoggedIn = false;
 
+    // Login functionality
+    const pinInputs = document.querySelectorAll('.pin-digit');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorMessage = document.getElementById('errorMessage');
+    const loginScreen = document.getElementById('loginScreen');
+    const mainForm = document.getElementById('updateForm');
+
+    // Auto-advance PIN inputs
+    pinInputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < pinInputs.length - 1) {
+          pinInputs[index + 1].focus();
+        }
+        validatePinInput();
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+          pinInputs[index - 1].focus();
+        }
+        if (e.key === 'Enter' && isPinComplete()) {
+          attemptLogin();
+        }
+      });
+
+      // Only allow numbers
+      input.addEventListener('keypress', (e) => {
+        if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+          e.preventDefault();
+        }
+      });
+    });
+
+    function validatePinInput() {
+      const isComplete = isPinComplete();
+      loginBtn.disabled = !isComplete;
+      loginBtn.classList.toggle('enabled', isComplete);
+      
+      // Clear error message when user starts typing
+      errorMessage.classList.remove('show');
+      pinInputs.forEach(input => input.classList.remove('error'));
+    }
+
+    function isPinComplete() {
+      return Array.from(pinInputs).every(input => input.value.length === 1);
+    }
+
+    function getCurrentPin() {
+      return Array.from(pinInputs).map(input => input.value).join('');
+    }
+
+    function attemptLogin() {
+      const enteredPin = getCurrentPin();
+      
+      if (enteredPin === CORRECT_PIN) {
+        // Success - show main form
+        loginScreen.style.display = 'none';
+        mainForm.classList.add('show');
+        isLoggedIn = true;
+      } else {
+        // Error - show error message and shake animation
+        errorMessage.classList.add('show');
+        pinInputs.forEach(input => {
+          input.classList.add('error');
+          input.value = '';
+        });
+        pinInputs[0].focus();
+        validatePinInput();
+        
+        setTimeout(() => {
+          pinInputs.forEach(input => input.classList.remove('error'));
+        }, 300);
+      }
+    }
+
+    loginBtn.addEventListener('click', attemptLogin);
+
+    // Focus first PIN input on load
+    pinInputs[0].focus();
+
+    // Main form functionality (existing code)
+    let selectedSign = null;
+    let selectedAccount = null;
+    let formData = {};
+
+    // Your Google Apps Script Web App URL
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzySp2FySd6uWdC1yuPc-t-fmaVKoRNNSynkww-1lXBFRyspRnJBL7K3e_27GIPQ7U/exec';
+
+    // Form validation
+    function validateForm() {
+      if (!isLoggedIn) return;
+      
+      const amount = document.getElementById('amount').value.trim();
+      const reason = document.getElementById('reason').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (amount && selectedSign && selectedAccount && reason) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.3';
+      }
+    }
+
+    // Sign toggle
+    document.querySelectorAll('#sign-buttons button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#sign-buttons button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedSign = btn.dataset.sign;
+        validateForm();
+      });
+    });
+
+    // Account toggle
+    document.querySelectorAll('#account-buttons button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#account-buttons button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedAccount = btn.dataset.account;
+        validateForm();
+      });
+    });
+
+    // Input validation
+    document.getElementById('amount').addEventListener('input', validateForm);
+    document.getElementById('reason').addEventListener('input', validateForm);
+
+    // Form submission
+    document.getElementById('updateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const amount = document.getElementById('amount').value.trim();
+      const reason = document.getElementById('reason').value.trim();
+      
+      formData = {
+        amount: amount,
+        sign: selectedSign,
+        account: selectedAccount,
+        reason: reason
+      };
+      
+      showConfirmModal();
+    });
+
+    function showConfirmModal() {
+      const modal = document.getElementById('confirmModal');
+      const confirmText = document.getElementById('confirmText');
+      
+      const action = formData.sign === 'plus' ? 'added' : 'took';
+      const preposition = formData.sign === 'plus' ? 'to' : 'from';
+      const accountName = getAccountName(formData.account);
+      
+      confirmText.textContent = `${action} ${formData.amount} ${preposition} ${accountName}?`;
+      modal.classList.add('show');
+    }
+
+    function getAccountName(account) {
+      switch(account) {
+        case 'COM': return 'COM bank';
+        case 'PPLS': return 'PPLS bank';
+        case 'HAND': return 'money on hand';
+        default: return 'account';
+      }
+    }
+
+    // Modal event listeners
+    document.getElementById('cancelBtn').addEventListener('click', function() {
+      document.getElementById('confirmModal').classList.remove('show');
+    });
+
+    document.getElementById('confirmSubmitBtn').addEventListener('click', function() {
+      submitToGoogleSheets();
+      document.getElementById('confirmModal').classList.remove('show');
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('confirmModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('show');
+      }
+    });
+
+    function submitToGoogleSheets() {      
+      // Show loading state
+      showNotification('Submitting transaction...', 'success');
+      
+      fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        // no-cors mode doesn't return response data, so we assume success
+        showNotification('Transaction recorded successfully!', 'success');
+        resetForm();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showNotification('Failed to record transaction. Please try again.', 'error');
+      });
+    }
+
+    function showNotification(message, type) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    function resetForm() {
+      document.getElementById('updateForm').reset();
+      document.querySelectorAll('.selected').forEach(btn => btn.classList.remove('selected'));
+      selectedSign = null;
+      selectedAccount = null;
+      validateForm();
+    }
+
+    // Initialize form validation
+    validateForm();
+  </script>
 </body>
 </html>
