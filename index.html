@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Any Updates?</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Quicksand:wght@300..700&display=swap');
@@ -369,10 +370,10 @@
       <div class="login-screen" id="loginScreen">
         <h2>Enter PIN</h2>
         <div class="pin-input-container">
-          <input type="password" class="pin-digit" maxlength="1" id="pin1">
-          <input type="password" class="pin-digit" maxlength="1" id="pin2">
-          <input type="password" class="pin-digit" maxlength="1" id="pin3">
-          <input type="password" class="pin-digit" maxlength="1" id="pin4">
+          <input type="password" class="pin-digit" inputmode="numeric" pattern="[0-9]*" maxlength="1" id="pin1">
+          <input type="password" class="pin-digit" inputmode="numeric" pattern="[0-9]*" maxlength="1" id="pin2">
+          <input type="password" class="pin-digit" inputmode="numeric" pattern="[0-9]*" maxlength="1" id="pin3">
+          <input type="password" class="pin-digit" inputmode="numeric" pattern="[0-9]*" maxlength="1" id="pin4">
         </div>
         <div class="error-message" id="errorMessage">Incorrect PIN. Please try again.</div>
         <button type="button" class="login-btn" id="loginBtn" disabled>Login</button>
@@ -383,7 +384,7 @@
         <h2>Any Updates?</h2>
         
         <label for="amount">Amount</label>
-        <input type="text" id="amount" placeholder="00000.00" />
+        <input type="number" id="amount" placeholder="00000.00" inputmode="decimal" step="0.01" />
         
         <div class="btn-group" id="sign-buttons">
           <button type="button" data-sign="plus">+</button>
