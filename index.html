@@ -449,13 +449,14 @@
     }
 
     /* Enhanced colors for account buttons */
+
     .account-group button[data-account="COM"].selected {
-      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
-      color: #fff;
-      border-color: #8b5cf6;
+      background: linear-gradient(135deg, #06b6d4 0%, #38bdf8 100%);
+      color: #000;
+      border-color: #06b6d4;
       box-shadow: 
         inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 6px 20px rgba(139, 92, 246, 0.3);
+        0 6px 20px rgba(6, 182, 212, 0.3);
       transform: translateY(-2px);
     }
 
@@ -470,12 +471,12 @@
     }
 
     .account-group button[data-account="HAND"].selected {
-      background: linear-gradient(135deg, #06b6d4 0%, #38bdf8 100%);
+      background: linear-gradient(135deg, #c306d4 0%, #e838f8 100%);
       color: #000;
-      border-color: #06b6d4;
+      border-color: #d238f8;
       box-shadow: 
         inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 6px 20px rgba(6, 182, 212, 0.3);
+        0 6px 20px rgba(188, 6, 212, 0.3);
       transform: translateY(-2px);
     }
 
@@ -676,7 +677,7 @@
         <label for="amount">Amount</label>
         <div class="amount-container">
           <input type="number" id="amount" class="amount-input" placeholder="0000.00" inputmode="decimal" step="0.01" />
-          <div class="amount-currency">$</div>
+          <div class="amount-currency">Rs.</div>
         </div>
         
         <div class="btn-group" id="sign-buttons">
@@ -879,7 +880,7 @@
       const modal = document.getElementById('confirmModal');
       const confirmText = document.getElementById('confirmText');
       
-      const action = formData.sign === 'plus' ? 'added' : 'took';
+      const action = formData.sign === 'plus' ? 'Added' : 'Took';
       const preposition = formData.sign === 'plus' ? 'to' : 'from';
       const accountName = getAccountName(formData.account);
       
