@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
     }
 
     body {
-      background-color: #1a1a1a;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a1a2a 100%);
       font-family: 'Outfit', sans-serif;
       color: white;
       display: flex;
@@ -23,6 +24,7 @@
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
+      overflow-x: hidden;
     }
 
     /* Container */
@@ -35,14 +37,20 @@
 
     /* Card */
     .card {
-      background-color: #0d0d0d;
-      padding: 2rem;
-      border-radius: 1rem;
-      width: 300px;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2d1a2d 100%);
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      width: 350px;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
       position: relative;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(139, 92, 246, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
     }
 
     /* Login Screen Styles */
@@ -50,44 +58,58 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .login-screen h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.8rem;
+      font-weight: 700;
       margin-bottom: 0.5rem;
+      background: linear-gradient(45deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .pin-input-container {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       justify-content: center;
     }
 
     .pin-digit {
-      width: 50px;
-      height: 50px;
-      border: 2px solid #fff;
-      border-radius: 0.5rem;
-      background-color: transparent;
+      width: 55px;
+      height: 55px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       color: #fff;
       font-size: 1.5rem;
       font-weight: bold;
       text-align: center;
       font-family: 'Outfit', sans-serif;
       transition: all 0.3s ease;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     .pin-digit:focus {
       outline: none;
       border-color: #8b5cf6;
-      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 0 0 3px rgba(139, 92, 246, 0.3),
+        0 0 20px rgba(139, 92, 246, 0.2);
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3d2d4d 100%);
+      transform: translateY(-2px);
     }
 
     .pin-digit.error {
       border-color: #ef4444;
       animation: shake 0.3s ease-in-out;
+      background: linear-gradient(135deg, #2a1a1a 0%, #3d2a2a 100%);
     }
 
     @keyframes shake {
@@ -98,21 +120,25 @@
 
     .login-btn {
       font-family: 'Outfit', sans-serif;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
       width: 100%;
-      padding: 0.8rem;
-      background-color: #fff;
-      color: #000;
-      font-weight: bold;
+      padding: 1rem;
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      color: #fff;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
       opacity: 0.3;
+      transform: translateY(0);
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
     }
 
     .login-btn:not(:disabled):hover {
       opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
     }
 
     .login-btn.enabled {
@@ -125,13 +151,17 @@
       text-align: center;
       opacity: 0;
       transition: opacity 0.3s ease;
+      padding: 0.5rem;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 0.5rem;
+      border: 1px solid rgba(239, 68, 68, 0.2);
     }
 
     .error-message.show {
       opacity: 1;
     }
 
-    /* Main form styles (hidden initially) */
+    /* Main form styles */
     .main-form {
       display: none;
     }
@@ -139,134 +169,313 @@
     .main-form.show {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     /* Header */
     .card h2 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
     }
 
     /* Labels */
     .card label {
-      font-size: 0.8rem;
-      color: #aaa;
+      font-size: 0.9rem;
+      color: #a78bfa;
       margin-top: 0.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    /* Inputs */
-    .card input[type="text"], .card textarea {
+    /* Amount Input - Modern and Captivating */
+    .amount-container {
+      position: relative;
+      margin: 0.5rem 0;
+    }
+
+    .amount-input {
       font-family: 'Outfit', sans-serif;
       width: 100%;
-      padding: 0.7rem;
-      background-color: transparent;
-      border: 1px solid #fff;
-      border-radius: 0.5rem;
+      padding: 1.2rem 1rem 1.2rem 2rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      border: 2px solid #333;
+      border-radius: 1rem;
       color: #fff;
-      font-size: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
+    .amount-input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        0 0 0 3px rgba(139, 92, 246, 0.2),
+        0 0 30px rgba(139, 92, 246, 0.3);
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3d2d4d 100%);
+      transform: translateY(-2px);
+    }
+
+    .amount-input:hover {
+      border-color: #555;
+      transform: translateY(-1px);
+      box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.3),
+        0 6px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .amount-currency {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #8b5cf6;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .amount-input:focus + .amount-currency {
+      color: #a78bfa;
+      text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+    .amount-input::placeholder {
+      color: #666;
+      font-weight: 400;
+    }
+
+    /* Reason textarea - Modern styling */
     .card textarea {
       font-family: 'Outfit', sans-serif;
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      color: #fff;
+      font-size: 1rem;
       resize: none;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      vertical-align: middle;
-      line-height: 1.2;
+      height: 80px;
+      transition: all 0.3s ease;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
-    /* Button groups */
+    .card textarea:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 0 0 3px rgba(139, 92, 246, 0.2),
+        0 0 20px rgba(139, 92, 246, 0.2);
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3d2d4d 100%);
+      transform: translateY(-2px);
+    }
+
+    .card textarea::placeholder {
+      color: #666;
+    }
+
+    /* Plus/Minus Button groups - Enhanced visibility */
     .btn-group {
       font-family: 'Outfit', sans-serif;
       display: flex;
       gap: 1rem;
+      margin: 1rem 0;
     }
 
-    .btn-group button, .account-group button {
+    .btn-group button {
       font-family: 'Outfit', sans-serif;
       flex: 1;
-      padding: 0.5rem 1rem;
-      background-color: transparent;
-      border: 1px solid #fff;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      border-radius: 0.5rem;
+      border-radius: 1rem;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 1.5rem;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
-    /* Account buttons */
+    .btn-group button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-group button:hover::before {
+      left: 100%;
+    }
+
+    .btn-group button:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Account buttons - Modern styling */
     .account-group {
       font-family: 'Outfit', sans-serif;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .account-group button {
+      font-family: 'Outfit', sans-serif;
+      flex: 1;
+      padding: 1rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .account-group button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     /* Submit button */
     .submit-btn {
       font-family: 'Outfit', sans-serif;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
       width: 100%;
-      padding: 0.8rem;
-      background-color: #fff;
-      color: #000;
-      font-weight: bold;
+      padding: 1.2rem;
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      color: #fff;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 1rem;
       cursor: pointer;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:not(:disabled):hover::before {
+      left: 100%;
     }
 
     .submit-btn:disabled {
       opacity: 0.3;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
     }
 
     .submit-btn:not(:disabled):hover {
       opacity: 0.9;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
     }
 
-    /* Unique colors for sign buttons */
+    /* Enhanced colors for sign buttons */
     .btn-group button[data-sign="plus"].selected {
-      background-color: #10b981;
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
       color: #000;
       border-color: #10b981;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 24px rgba(16, 185, 129, 0.3);
+      transform: translateY(-3px);
     }
 
     .btn-group button[data-sign="minus"].selected {
-      background-color: #ef4444;
+      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
       color: #fff;
       border-color: #ef4444;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.1),
+        0 8px 24px rgba(239, 68, 68, 0.3);
+      transform: translateY(-3px);
     }
 
-    /* Unique colors for account buttons */
+    /* Enhanced colors for account buttons */
     .account-group button[data-account="COM"].selected {
-      background-color: #8b5cf6;
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
       color: #fff;
       border-color: #8b5cf6;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.1),
+        0 6px 20px rgba(139, 92, 246, 0.3);
+      transform: translateY(-2px);
     }
 
     .account-group button[data-account="PPLS"].selected {
-      background-color: #f59e0b;
+      background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
       color: #000;
       border-color: #f59e0b;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.1),
+        0 6px 20px rgba(245, 158, 11, 0.3);
+      transform: translateY(-2px);
     }
 
     .account-group button[data-account="HAND"].selected {
-      background-color: #06b6d4;
+      background: linear-gradient(135deg, #06b6d4 0%, #38bdf8 100%);
       color: #000;
       border-color: #06b6d4;
-    }
-
-    /* Hover effects */
-    .btn-group button:hover, .account-group button:hover {
-      opacity: 0.8;
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.1),
+        0 6px 20px rgba(6, 182, 212, 0.3);
+      transform: translateY(-2px);
     }
 
     /* Modal styles */
@@ -278,6 +487,7 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -285,53 +495,73 @@
 
     .modal.show {
       display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-content {
-      background-color: #0d0d0d;
-      padding: 2rem;
-      border-radius: 1rem;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2d1a2d 100%);
+      padding: 2.5rem;
+      border-radius: 1.5rem;
       max-width: 400px;
       width: 90%;
       text-align: center;
-      border: 1px solid #333;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 16px 64px rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(139, 92, 246, 0.1);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .modal h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
       color: #fff;
+      font-weight: 600;
     }
 
     .modal-buttons {
       display: flex;
       gap: 1rem;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
 
     .modal-btn {
       flex: 1;
-      padding: 0.8rem;
+      padding: 1rem;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 1rem;
       font-family: 'Outfit', sans-serif;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-size: 1rem;
     }
 
     .confirm-btn {
-      background-color: #10b981;
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
       color: #000;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
     }
 
     .cancel-btn {
-      background-color: #ef4444;
+      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
       color: #fff;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
     }
 
     .modal-btn:hover {
-      opacity: 0.8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     /* Notification styles */
@@ -339,13 +569,14 @@
       position: fixed;
       top: 20px;
       right: 20px;
-      padding: 1rem 1.5rem;
-      border-radius: 0.5rem;
+      padding: 1.2rem 1.8rem;
+      border-radius: 1rem;
       font-family: 'Outfit', sans-serif;
-      font-weight: bold;
+      font-weight: 700;
       z-index: 1001;
       transform: translateX(100%);
       transition: transform 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
 
     .notification.show {
@@ -353,13 +584,71 @@
     }
 
     .notification.success {
-      background-color: #10b981;
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
       color: #000;
     }
 
     .notification.error {
-      background-color: #ef4444;
+      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
       color: #fff;
+    }
+
+    /* Pulse animation for focused amount input */
+    @keyframes pulse {
+      0% { box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(139, 92, 246, 0.2), 0 0 30px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.5); }
+      100% { box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(139, 92, 246, 0.2), 0 0 30px rgba(139, 92, 246, 0.3); }
+    }
+
+    .amount-input.typing {
+      animation: pulse 2s infinite;
+    }
+
+    .amount-input::-webkit-outer-spin-button,
+    .amount-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .amount-input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .card {
+        width: 100%;
+        max-width: 350px;
+        padding: 2rem;
+      }
+      
+      .pin-input-container {
+        gap: 0.5rem;
+      }
+      
+      .pin-digit {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+      }
+      
+      .amount-input {
+        font-size: 1.8rem;
+        padding: 1rem 0.8rem 1rem 1.8rem;
+      }
+      
+      .btn-group {
+        gap: 0.75rem;
+      }
+      
+      .account-group {
+        gap: 0.5rem;
+      }
+      
+      .account-group button {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -384,11 +673,14 @@
         <h2>Any Updates?</h2>
         
         <label for="amount">Amount</label>
-        <input type="number" id="amount" placeholder="00000.00" inputmode="decimal" step="0.01" />
+        <div class="amount-container">
+          <input type="number" id="amount" class="amount-input" placeholder="0000.00" inputmode="decimal" step="0.01" />
+          <div class="amount-currency">$</div>
+        </div>
         
         <div class="btn-group" id="sign-buttons">
           <button type="button" data-sign="plus">+</button>
-          <button type="button" data-sign="minus">-</button>
+          <button type="button" data-sign="minus">−</button>
         </div>
         
         <label>Account</label>
@@ -399,7 +691,7 @@
         </div>
         
         <label for="reason">Why though?</label>
-        <textarea id="reason" placeholder=""></textarea>
+        <textarea id="reason" placeholder="Enter reason for transaction..."></textarea>
         
         <button type="submit" class="submit-btn" id="submitBtn" disabled>Update</button>
       </form>
@@ -467,7 +759,6 @@
       errorMessage.classList.remove('show');
       pinInputs.forEach(input => input.classList.remove('error'));
     }
-
     function isPinComplete() {
       return Array.from(pinInputs).every(input => input.value.length === 1);
     }
@@ -504,6 +795,19 @@
 
     // Focus first PIN input on load
     pinInputs[0].focus();
+
+    // Amount input enhancements
+    const amountInput = document.getElementById('amount');
+    
+    // Add typing animation
+    amountInput.addEventListener('input', (e) => {
+      amountInput.classList.add('typing');
+      clearTimeout(amountInput.typingTimer);
+      amountInput.typingTimer = setTimeout(() => {
+        amountInput.classList.remove('typing');
+      }, 1000);
+      validateForm();
+    });
 
     // Main form functionality (existing code)
     let selectedSign = null;
@@ -551,7 +855,6 @@
     });
 
     // Input validation
-    document.getElementById('amount').addEventListener('input', validateForm);
     document.getElementById('reason').addEventListener('input', validateForm);
 
     // Form submission
