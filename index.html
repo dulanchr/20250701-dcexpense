@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/svg+xml" href="fav.svg">
-  <title>Salli Kanna</title>
+  <title>Salli Kanna - Login</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Quicksand:wght@300..700&display=swap');
 
@@ -27,7 +26,6 @@
       overflow-x: hidden;
     }
 
-    /* Container */
     .container {
       display: flex;
       align-items: center;
@@ -35,7 +33,6 @@
       width: 100%;
     }
 
-    /* Card */
     .card {
       background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2d1a2d 100%);
       padding: 2.5rem;
@@ -53,7 +50,6 @@
       backdrop-filter: blur(10px);
     }
 
-    /* Login Screen Styles */
     .login-screen {
       display: flex;
       flex-direction: column;
@@ -161,462 +157,6 @@
       opacity: 1;
     }
 
-    /* Main form styles */
-    .main-form {
-      display: none;
-    }
-
-    .main-form.show {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-
-    /* Header */
-    .card h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      background: linear-gradient(45deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-align: left;
-    }
-
-    /* Labels */
-    .card label {
-      font-size: 0.9rem;
-      color: #a78bfa;
-      margin-top: 0.5rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Amount Input - Modern and Captivating */
-    .amount-container {
-      position: relative;
-      margin: 0.5rem 0;
-    }
-
-    .amount-input {
-      font-family: 'Outfit', sans-serif;
-      width: 100%;
-      padding: 1.2rem 1rem 1.2rem 2rem;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      border: 2px solid #333;
-      border-radius: 1rem;
-      color: #fff;
-      font-size: 2rem;
-      font-weight: 700;
-      text-align: center;
-      transition: all 0.3s ease;
-      box-shadow: 
-        inset 0 2px 10px rgba(0, 0, 0, 0.3),
-        0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .amount-input:focus {
-      outline: none;
-      border-color: #8b5cf6;
-      box-shadow: 
-        inset 0 2px 10px rgba(0, 0, 0, 0.3),
-        0 4px 20px rgba(0, 0, 0, 0.2),
-        0 0 0 3px rgba(139, 92, 246, 0.2),
-        0 0 30px rgba(139, 92, 246, 0.3);
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3d2d4d 100%);
-      transform: translateY(-2px);
-    }
-
-    .amount-input:hover {
-      border-color: #555;
-      transform: translateY(-1px);
-      box-shadow: 
-        inset 0 2px 10px rgba(0, 0, 0, 0.3),
-        0 6px 25px rgba(0, 0, 0, 0.3);
-    }
-
-    .amount-currency {
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #8b5cf6;
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-
-    .amount-input:focus + .amount-currency {
-      color: #a78bfa;
-      text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-    }
-
-    .amount-input::placeholder {
-      color: #666;
-      font-weight: 400;
-    }
-
-    /* Reason textarea - Modern styling */
-    .card textarea {
-      font-family: 'Outfit', sans-serif;
-      width: 100%;
-      padding: 1rem;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1rem;
-      color: #fff;
-      font-size: 1rem;
-      resize: none;
-      height: 80px;
-      transition: all 0.3s ease;
-      margin: 0.25rem 0;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.2),
-        0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .card textarea:focus {
-      outline: none;
-      border-color: #8b5cf6;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.2),
-        0 4px 16px rgba(0, 0, 0, 0.1),
-        0 0 0 3px rgba(139, 92, 246, 0.2),
-        0 0 20px rgba(139, 92, 246, 0.2);
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3d2d4d 100%);
-      transform: translateY(-2px);
-    }
-
-    .card textarea::placeholder {
-      color: #666;
-    }
-
-    /* Plus/Minus Button groups - Enhanced visibility */
-    .btn-group {
-      font-family: 'Outfit', sans-serif;
-      display: flex;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .btn-group button {
-      font-family: 'Outfit', sans-serif;
-      flex: 1;
-      padding: 1rem 1.5rem;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      border-radius: 1rem;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.2),
-        0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-group button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn-group button:hover::before {
-      left: 100%;
-    }
-
-    .btn-group button:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.2),
-        0 8px 24px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Account buttons - Modern styling */
-    .account-group {
-      font-family: 'Outfit', sans-serif;
-      display: flex;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin: 0.25rem 0;
-    }
-
-    .account-group button {
-      font-family: 'Outfit', sans-serif;
-      flex: 1;
-      padding: 1rem;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
-      border-radius: 1rem;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.2),
-        0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .account-group button:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.2),
-        0 6px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Submit button */
-    .submit-btn {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      width: 100%;
-      padding: 1.2rem;
-      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
-      color: #fff;
-      border: none;
-      border-radius: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .submit-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .submit-btn:not(:disabled):hover::before {
-      left: 100%;
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
-    }
-
-    .submit-btn:not(:disabled):hover {
-      opacity: 0.9;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
-    }
-
-    /* Enhanced colors for sign buttons */
-    .btn-group button[data-sign="plus"].selected {
-      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-      color: #000;
-      border-color: #10b981;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 8px 24px rgba(16, 185, 129, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .btn-group button[data-sign="minus"].selected {
-      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-      color: #fff;
-      border-color: #ef4444;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 8px 24px rgba(239, 68, 68, 0.3);
-      transform: translateY(-3px);
-    }
-
-    /* Enhanced colors for account buttons */
-
-    .account-group button[data-account="COM"].selected {
-      background: linear-gradient(135deg, #06b6d4 0%, #38bdf8 100%);
-      color: #000;
-      border-color: #06b6d4;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 6px 20px rgba(6, 182, 212, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .account-group button[data-account="PPLS"].selected {
-      background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-      color: #000;
-      border-color: #f59e0b;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 6px 20px rgba(245, 158, 11, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .account-group button[data-account="HAND"].selected {
-      background: linear-gradient(135deg, #c306d4 0%, #e838f8 100%);
-      color: #000;
-      border-color: #d238f8;
-      box-shadow: 
-        inset 0 2px 8px rgba(0, 0, 0, 0.1),
-        0 6px 20px rgba(188, 6, 212, 0.3);
-      transform: translateY(-2px);
-    }
-
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal.show {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-content {
-      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #2d1a2d 100%);
-      padding: 2.5rem;
-      border-radius: 1.5rem;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 16px 64px rgba(0, 0, 0, 0.5),
-        0 8px 32px rgba(139, 92, 246, 0.1);
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal h3 {
-      font-size: 1.4rem;
-      margin-bottom: 2rem;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .modal-btn {
-      flex: 1;
-      padding: 1rem;
-      border: none;
-      border-radius: 1rem;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-    }
-
-    .confirm-btn {
-      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-      color: #000;
-      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
-    }
-
-    .cancel-btn {
-      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
-    }
-
-    .modal-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Notification styles */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 1.2rem 1.8rem;
-      border-radius: 1rem;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      z-index: 1001;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .notification.show {
-      transform: translateX(0);
-    }
-
-    .notification.success {
-      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-      color: #000;
-    }
-
-    .notification.error {
-      background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-      color: #fff;
-    }
-
-    /* Pulse animation for focused amount input */
-    @keyframes pulse {
-      0% { box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(139, 92, 246, 0.2), 0 0 30px rgba(139, 92, 246, 0.3); }
-      50% { box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.5); }
-      100% { box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3), 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(139, 92, 246, 0.2), 0 0 30px rgba(139, 92, 246, 0.3); }
-    }
-
-    .amount-input.typing {
-      animation: pulse 2s infinite;
-    }
-
-    .amount-input::-webkit-outer-spin-button,
-    .amount-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    .amount-input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-    /* Responsive design */
     @media (max-width: 480px) {
       .card {
         width: 100%;
@@ -633,31 +173,12 @@
         height: 50px;
         font-size: 1.3rem;
       }
-      
-      .amount-input {
-        font-size: 1.8rem;
-        padding: 1rem 0.8rem 1rem 1.8rem;
-      }
-      
-      .btn-group {
-        gap: 0.75rem;
-      }
-      
-      .account-group {
-        gap: 0.5rem;
-      }
-      
-      .account-group button {
-        font-size: 0.8rem;
-        padding: 0.8rem;
-      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="card">
-      <!-- Login Screen -->
       <div class="login-screen" id="loginScreen">
         <h2>Enter PIN</h2>
         <div class="pin-input-container">
@@ -669,62 +190,20 @@
         <div class="error-message" id="errorMessage">Incorrect PIN. Please try again.</div>
         <button type="button" class="login-btn" id="loginBtn" disabled>Login</button>
       </div>
-
-      <!-- Main Form (hidden initially) -->
-      <form class="main-form" id="updateForm">
-        <h2>DULANGE SALLI KANNA</h2>
-        
-        <label for="amount">Amount</label>
-        <div class="amount-container">
-          <input type="number" id="amount" class="amount-input" placeholder="0000.00" inputmode="decimal" step="0.01" />
-          <div class="amount-currency">Rs.</div>
-        </div>
-        
-        <div class="btn-group" id="sign-buttons">
-          <button type="button" data-sign="plus">+</button>
-          <button type="button" data-sign="minus">−</button>
-        </div>
-        
-        <label>Account</label>
-        <div class="account-group" id="account-buttons">
-          <button type="button" data-account="COM">COM</button>
-          <button type="button" data-account="PPLS">PPLS</button>
-          <button type="button" data-account="HAND">HAND</button>
-        </div>
-        
-        <label for="reason">Ai ithin?</label>
-        <textarea id="reason" placeholder="Enter reason for transaction..."></textarea>
-        
-        <button type="submit" class="submit-btn" id="submitBtn" disabled>Update</button>
-      </form>
     </div>
   </div>
-
-  <!-- Confirmation Modal -->
-  <div class="modal" id="confirmModal">
-    <div class="modal-content">
-      <h3 id="confirmText">Confirm your action</h3>
-      <div class="modal-buttons">
-        <button type="button" class="modal-btn cancel-btn" id="cancelBtn">Hell No!</button>
-        <button type="button" class="modal-btn confirm-btn" id="confirmSubmitBtn">Yes</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Notification -->
-  <div class="notification" id="notification"></div>
 
   <script>
-    // PIN Configuration
-    const CORRECT_PIN = '1234'; // Change this to your desired PIN
-    let isLoggedIn = false;
+    // PIN Configuration for different accounts
+    const PINS = {
+      '1234': 'dulan.html',  // Dulan's account
+      '5678': 'chamo.html'   // Chamo's account
+    };
 
     // Login functionality
     const pinInputs = document.querySelectorAll('.pin-digit');
     const loginBtn = document.getElementById('loginBtn');
     const errorMessage = document.getElementById('errorMessage');
-    const loginScreen = document.getElementById('loginScreen');
-    const mainForm = document.getElementById('updateForm');
 
     // Auto-advance PIN inputs
     pinInputs.forEach((input, index) => {
@@ -761,6 +240,7 @@
       errorMessage.classList.remove('show');
       pinInputs.forEach(input => input.classList.remove('error'));
     }
+
     function isPinComplete() {
       return Array.from(pinInputs).every(input => input.value.length === 1);
     }
@@ -772,11 +252,9 @@
     function attemptLogin() {
       const enteredPin = getCurrentPin();
       
-      if (enteredPin === CORRECT_PIN) {
-        // Success - show main form
-        loginScreen.style.display = 'none';
-        mainForm.classList.add('show');
-        isLoggedIn = true;
+      if (PINS[enteredPin]) {
+        // Success - redirect to appropriate account page
+        window.location.href = PINS[enteredPin];
       } else {
         // Error - show error message and shake animation
         errorMessage.classList.add('show');
@@ -797,167 +275,6 @@
 
     // Focus first PIN input on load
     pinInputs[0].focus();
-
-    // Amount input enhancements
-    const amountInput = document.getElementById('amount');
-    
-    // Add typing animation
-    amountInput.addEventListener('input', (e) => {
-      amountInput.classList.add('typing');
-      clearTimeout(amountInput.typingTimer);
-      amountInput.typingTimer = setTimeout(() => {
-        amountInput.classList.remove('typing');
-      }, 1000);
-      validateForm();
-    });
-
-    // Main form functionality (existing code)
-    let selectedSign = null;
-    let selectedAccount = null;
-    let formData = {};
-
-    // Your Google Apps Script Web App URL
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw5KD9sF6vICRkDXXQ9x5jFdCw8W3eKuKHEpc01i8o6WoZ8CV32lTZ8XecJVi4nhbE/exec';
-
-    // Form validation
-    function validateForm() {
-      if (!isLoggedIn) return;
-      
-      const amount = document.getElementById('amount').value.trim();
-      const reason = document.getElementById('reason').value.trim();
-      const submitBtn = document.getElementById('submitBtn');
-      
-      if (amount && selectedSign && selectedAccount && reason) {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-      } else {
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.3';
-      }
-    }
-
-    // Sign toggle
-    document.querySelectorAll('#sign-buttons button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#sign-buttons button').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        selectedSign = btn.dataset.sign;
-        validateForm();
-      });
-    });
-
-    // Account toggle
-    document.querySelectorAll('#account-buttons button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#account-buttons button').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        selectedAccount = btn.dataset.account;
-        validateForm();
-      });
-    });
-
-    // Input validation
-    document.getElementById('reason').addEventListener('input', validateForm);
-
-    // Form submission
-    document.getElementById('updateForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const amount = document.getElementById('amount').value.trim();
-      const reason = document.getElementById('reason').value.trim();
-      
-      formData = {
-        amount: amount,
-        sign: selectedSign,
-        account: selectedAccount,
-        reason: reason
-      };
-      
-      showConfirmModal();
-    });
-
-    function showConfirmModal() {
-      const modal = document.getElementById('confirmModal');
-      const confirmText = document.getElementById('confirmText');
-      
-      const action = formData.sign === 'plus' ? 'Added' : 'Took';
-      const preposition = formData.sign === 'plus' ? 'to' : 'from';
-      const accountName = getAccountName(formData.account);
-      
-      confirmText.textContent = `${action} ${formData.amount} ${preposition} ${accountName}?`;
-      modal.classList.add('show');
-    }
-
-    function getAccountName(account) {
-      switch(account) {
-        case 'COM': return 'COM bank';
-        case 'PPLS': return 'PPLS bank';
-        case 'HAND': return 'money on hand';
-        default: return 'account';
-      }
-    }
-
-    // Modal event listeners
-    document.getElementById('cancelBtn').addEventListener('click', function() {
-      document.getElementById('confirmModal').classList.remove('show');
-    });
-
-    document.getElementById('confirmSubmitBtn').addEventListener('click', function() {
-      submitToGoogleSheets();
-      document.getElementById('confirmModal').classList.remove('show');
-    });
-
-    // Close modal when clicking outside
-    document.getElementById('confirmModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        this.classList.remove('show');
-      }
-    });
-
-    function submitToGoogleSheets() {      
-      // Show loading state
-      showNotification('Submitting transaction...', 'success');
-      
-      fetch(GOOGLE_SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      })
-      .then(() => {
-        // no-cors mode doesn't return response data, so we assume success
-        showNotification('Transaction recorded successfully!', 'success');
-        resetForm();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        showNotification('Failed to record transaction. Please try again.', 'error');
-      });
-    }
-
-    function showNotification(message, type) {
-      const notification = document.getElementById('notification');
-      notification.textContent = message;
-      notification.className = `notification ${type}`;
-      notification.classList.add('show');
-      
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 3000);
-    }
-
-    function resetForm() {
-      document.getElementById('updateForm').reset();
-      document.querySelectorAll('.selected').forEach(btn => btn.classList.remove('selected'));
-      selectedSign = null;
-      selectedAccount = null;
-      validateForm();
-    }
-
-    // Initialize form validation
-    validateForm();
   </script>
 </body>
 </html>

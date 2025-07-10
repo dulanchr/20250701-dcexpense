@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="fav.svg">
+  <title>Salli Kanna</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <!-- Main Form -->
+      <form class="main-form show" id="updateForm">
+        <h2>Chamoge SALLI KANNA</h2>
+        
+        <label for="amount">Amount</label>
+        <div class="amount-container">
+          <input type="number" id="amount" class="amount-input" placeholder="0000.00" inputmode="decimal" step="0.01" />
+          <div class="amount-currency">Rs.</div>
+        </div>
+        
+        <div class="btn-group" id="sign-buttons">
+          <button type="button" data-sign="plus">+</button>
+          <button type="button" data-sign="minus">−</button>
+        </div>
+        
+        <label>Account</label>
+        <div class="account-group" id="account-buttons">
+          <button type="button" data-account="COM">COM</button>
+          <button type="button" data-account="NSB">NSB</button>
+          <button type="button" data-account="HAND">HAND</button>
+        </div>
+        
+        <label for="reason">Ai ithin?</label>
+        <textarea id="reason" placeholder="Enter reason for transaction..."></textarea>
+        
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>Update</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content">
+      <h3 id="confirmText">Confirm your action</h3>
+      <div class="modal-buttons">
+        <button type="button" class="modal-btn cancel-btn" id="cancelBtn">Hell No!</button>
+        <button type="button" class="modal-btn confirm-btn" id="confirmSubmitBtn">Yes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" id="notification"></div>
+
+  <script>
+    // Debug logging
+    console.log('Script loaded');
+
+    // Amount input enhancements
+    const amountInput = document.getElementById('amount');
+    amountInput.addEventListener('input', () => {
+      amountInput.classList.add('typing');
+      clearTimeout(amountInput.typingTimer);
+      amountInput.typingTimer = setTimeout(() => {
+        amountInput.classList.remove('typing');
+      }, 1000);
+      validateForm();
+    });
+
+    let selectedSign = null;
+    let selectedAccount = null;
+    let formData = {};
+
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw7sH-zryCUbL2JPw1DKGB602BW0l41QHl6DHUCrC4KSgMgKH5pbCp5kb3pLSztk5M/exec';
+
+    function validateForm() {
+      const amount = document.getElementById('amount').value.trim();
+      const reason = document.getElementById('reason').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+      
+      console.log('Validating form:', { amount, selectedSign, selectedAccount, reason });
+      
+      if (amount && selectedSign && selectedAccount && reason) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.3';
+      }
+    }
+
+    // Sign buttons event listeners
+    document.querySelectorAll('#sign-buttons button').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Sign button clicked:', btn.dataset.sign);
+        document.querySelectorAll('#sign-buttons button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedSign = btn.dataset.sign;
+        console.log('Selected sign:', selectedSign);
+        validateForm();
+      });
+    });
+
+    // Account buttons event listeners
+    document.querySelectorAll('#account-buttons button').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Account button clicked:', btn.dataset.account);
+        document.querySelectorAll('#account-buttons button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedAccount = btn.dataset.account;
+        console.log('Selected account:', selectedAccount);
+        validateForm();
+      });
+    });
+
+    // Reason input event listener
+    document.getElementById('reason').addEventListener('input', validateForm);
+
+    // Form submit event listener
+    document.getElementById('updateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const amount = document.getElementById('amount').value.trim();
+      const reason = document.getElementById('reason').value.trim();
+
+      formData = {
+        amount: amount,
+        sign: selectedSign,
+        account: selectedAccount,
+        reason: reason
+      };
+
+      console.log('Form submitted:', formData);
+      showConfirmModal();
+    });
+
+    function showConfirmModal() {
+      const modal = document.getElementById('confirmModal');
+      const confirmText = document.getElementById('confirmText');
+      
+      const action = formData.sign === 'plus' ? 'Added' : 'Took';
+      const preposition = formData.sign === 'plus' ? 'to' : 'from';
+      const accountName = getAccountName(formData.account);
+      
+      confirmText.textContent = `${action} ${formData.amount} ${preposition} ${accountName}?`;
+      modal.classList.add('show');
+    }
+
+    function getAccountName(account) {
+      console.log('Getting account name for:', account);
+      switch(account) {
+        case 'COM': return 'COM bank';
+        case 'NSB': return 'NSB bank';
+        case 'HAND': return 'money on hand';
+        default: return 'account';
+      }
+    }
+
+    document.getElementById('cancelBtn').addEventListener('click', function() {
+      document.getElementById('confirmModal').classList.remove('show');
+    });
+
+    document.getElementById('confirmSubmitBtn').addEventListener('click', function() {
+      submitToGoogleSheets();
+      document.getElementById('confirmModal').classList.remove('show');
+    });
+
+    document.getElementById('confirmModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('show');
+      }
+    });
+
+    function submitToGoogleSheets() {
+      console.log('Submitting to Google Sheets:', formData);
+      showNotification('Submitting transaction...', 'success');
+
+      fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(() => {
+        showNotification('Transaction recorded successfully!', 'success');
+        resetForm();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showNotification('Failed to record transaction. Please try again.', 'error');
+      });
+    }
+
+    function showNotification(message, type) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    function resetForm() {
+      document.getElementById('updateForm').reset();
+      document.querySelectorAll('.selected').forEach(btn => btn.classList.remove('selected'));
+      selectedSign = null;
+      selectedAccount = null;
+      validateForm();
+    }
+
+    // Initial validation
+    validateForm();
+
+    // Debug: Log all account buttons on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, checking account buttons...');
+      const accountButtons = document.querySelectorAll('#account-buttons button');
+      accountButtons.forEach((btn, index) => {
+        console.log(`Account button ${index}:`, btn.dataset.account, btn.textContent);
+      });
+    });
+  </script>
+</body>
+</html>
